@@ -33,9 +33,11 @@ function EveryBlock () {
 
 	function scanBySchemas (schema,callback) {
 		getCityForZip(currentZIP,function (cityname) {
-			jsonp_request(getAPIURL('content/'+cityname+'/locations/'+currentZIP+'/timeline/events'),function (data) {
+			jsonp_request(getAPIURL('content/'+cityname+'/topnews')+'&schema='+schema.join('&schema='),function (data) {
 				var results = data.results;
 				var filtered = [];
+
+				console.log(results)
 
 				for (var i = 0; i < results.length; i++) {
 					if (schema.indexOf(results[i].schema) > -1) {
@@ -47,6 +49,26 @@ function EveryBlock () {
 			});
 		});
 	}
+
+	function scanEventsBySchemas (schema,callback) {
+		getCityForZip(currentZIP,function (cityname) {
+			jsonp_request(getAPIURL('content/'+cityname+'/locations/'+currentZIP+'/timeline')+'&schema='+schema.join('&schema='),function (data) {
+				var results = data.results;
+				var filtered = [];
+
+				console.log(results)
+
+				for (var i = 0; i < results.length; i++) {
+					if (schema.indexOf(results[i].schema) > -1) {
+						filtered.push(results[i]);
+					}
+				};
+
+				callback(filtered);
+			});
+		});
+	}
+
 
 	function Location (argument) {
 		// body...
@@ -137,6 +159,12 @@ function EveryBlock () {
 		return obj;
 	}
 
+
+
+
+
+
+
 	return {
 		scanEvents:function (zip,callback) {
 			currentZIP = zip;
@@ -154,6 +182,10 @@ function EveryBlock () {
 			currentZIP = zip;
 			scanBySchemas(schema,callback)
 		},
+		scanEventsBySchemas:function (zip,schema,callback) {
+			currentZIP = zip;
+			scanEventsBySchemas(schema,callback)
+		},
 		zipFromLatLon:function (lat,lon,callback) {
 			getZIPForCoordinates(lat,lon,callback);
 		},
@@ -166,9 +198,9 @@ function EveryBlock () {
 }
 
 
-EveryBlock().scanEvents("02117",function (d) {
-	console.log("events",d);
-});
+// EveryBlock().scanEvents("02117",function (d) {
+// 	console.log("events",d);
+// });
 
 // EveryBlock().scanTimeline("02117",function (d) {
 // 	console.log("timeline",d);
@@ -178,9 +210,9 @@ EveryBlock().scanEvents("02117",function (d) {
 // 	console.log("news",d);
 // });
 
-EveryBlock().scanBySchemas("02117",["meetups"],function (d) {
-	console.log("schema",d);
-});
+// EveryBlock().scanBySchemas("02117",["meetups"],function (d) {
+// 	console.log("schema",d);
+// });
 
 EveryBlock().zipFromLatLon
 
