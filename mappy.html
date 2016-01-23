@@ -4,9 +4,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
+<!-- <<<<<<< HEAD -->
   <script type="text/javascript" src="jsonp.js"></script>
   
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.js"></script>
+<!-- ======= -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.12.0-beta.1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="jsonp.js"></script>
+<!-- >>>>>>> 09ce532ab9f1da172fdfa36aacc8957e0628f1fa -->
 <script type="text/javascript" src="sms.js"></script>    
 <script type="text/javascript" src="endpoints/everyblock.js"></script>    
 <script type="text/javascript" src="endpoints/johnson.js"></script> 
@@ -101,8 +107,8 @@
                 </li>
                 <span id="search">
     <li class="searchbox">
-      <form>
-        <input type="text" name="search">
+      <form onsubmit="return false;">
+        <input type="text" name="search" id="searchbar">
       </form>
     </li>
     <li class="searchlink">
@@ -242,30 +248,49 @@ var map;
                     var str=d.attributes.item_datetime;
                     // console.log(str);  
                     
-                    addMarker(d.location_coordinates[0], '<Strong>'+"Event:"+'</Strong>'+d.title+'<br>'+'<Strong>'+"Venue:"+'</Strong>'+d.location_name+'<br>'+'<a target="_blank" class="popup" href="' + d.url + '">'+"More"+'</a>');
+                    addMarker(d.location_coordinates[0], '<Strong>'+"Event:"+'</Strong>'+d.title+'<br>'+'<Strong>'+"Venue:"+'</Strong>'+d.location_name+'<br>'+'<a target="_blank" class="popup" href="' + d.url + '">'+"More"+'</a>',TYPE_HEALTH);
                     
                   });
                 });
               } else {
-
+                addMarkersFromList(data,((s.indexOf('crime') > -1)? TYPE_CRIME : TYPE_NEWS ) );
                 console.log(data);
-                data.forEach(function(d)
-                {
-                  console.log(d);
-                  var str=d.attributes.item_datetime;
-                  // console.log(str);  
-                  addMarker(d.location_coordinates[0],'<Strong>'+"Event:"+'</Strong>'+d.title+'<br>'+'<Strong>'+"Venue:"+'</Strong>'+d.location_name+'<br>'+'<a target="_blank" class="popup" href="' + d.url + '">'+"More"+'</a>' );
-
-
-                  
-                });
+                
               }
         });
    }
        
-function addMarker (coords,text) {
+function addMarkersFromList (data,type) {
+  data.forEach(function(d)
+                {
+                  console.log(d);
+                  var str=d.attributes.item_datetime;
+                  // console.log(str);  
+                  addMarker(d.location_coordinates[0],'<Strong>'+"Event:"+'</Strong>'+d.title+'<br>'+'<Strong>'+"Venue:"+'</Strong>'+d.location_name+'<br>'+'<a target="_blank" class="popup" href="' + d.url + '">'+"More"+'</a>',type );
+
+
+                  
+                });
+}
+
+function addMarker (coords,text,type) {
   console.log(coords)
-  var m = L.marker([coords.latitude,coords.longitude]).bindPopup(L.popup({maxWidth:500}).setContent( text )).addTo(map);
+
+  var ico;
+
+  switch (type) {
+    case TYPE_CRIME:
+      ico = crimeIcon;
+      break;
+    case TYPE_NEWS:
+      ico = newsIcon;
+      break;
+    case TYPE_HEALTH:
+      ico = healthIcon;
+      break;
+  }
+
+  var m = L.marker([coords.latitude,coords.longitude],{icon: ico}).bindPopup(L.popup({maxWidth:500}).setContent( text )).addTo(map);
 
                     markers.push(m);
 }
@@ -276,6 +301,45 @@ function removeMarkers () {
 
   };
 }
+
+function setSearch (query) {
+  window.EveryBlock.searchByName(query,function (results) {
+    addMarkersFromList(results);
+    console.log("setSearch",results)
+  });
+}
+
+$('#searchbar').change(function(e){
+  searchDebounce.input();
+  console.log("change")
+});
+
+function Debounce(delay,callback) {
+  var t;
+  var self = {
+    input:function () {
+      if (t) {
+        clearTimeout(t);
+      }
+      t = setTimeout(function() {
+        callback();
+      }, delay);
+    },
+  };
+  return self;
+}
+
+var searchDebounce = new Debounce(100,function () {
+  var value = $('#searchbar').val();
+  setSearch(value);
+  // console.log("ds",value)
+
+})
+
+window.EveryBlock.searchByName("crime",function (results) {
+  addMarkersFromList(results);
+  console.log("setSearch",results)
+});
 
 // showMap();
 
@@ -290,8 +354,40 @@ function removeMarkers () {
 //   });
 // });
 
+var healthIcon = L.icon({
+    iconUrl: 'images/health-tack.png',
+    shadowUrl: 'images/shadow-tack.png',
 
+    iconSize:     [29, 44], // size of the icon
+    shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    shadowAnchor: [8, 112],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+var crimeIcon = L.icon({
+    iconUrl: 'images/crime-tack.png',
+    shadowUrl: 'images/shadow-tack.png',
 
+    iconSize:     [29, 44], // size of the icon
+    shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    shadowAnchor: [8, 112],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+var newsIcon = L.icon({
+    iconUrl: 'images/news-tack.png',
+    shadowUrl: 'images/shadow-tack.png',
+
+    iconSize:     [29, 44], // size of the icon
+    shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    shadowAnchor: [8, 112],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+
+var TYPE_CRIME = 0;
+var TYPE_NEWS = 1;
+var TYPE_HEALTH = 2;
 
 
 
