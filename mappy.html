@@ -89,12 +89,12 @@
                 <a href="index.html"><img src="images/home.png" class="ico">&nbsp;Home</a>
             </li>
             <li>
-                <a href="#"><img src="images/news.png" class="ico">&nbsp;News</a>
+                <a href="#" onclick="setSchemas(['news-articles']); return false;"><img src="images/news.png" class="ico">&nbsp;News</a>
                 <li>
-                    <a href="#"><img src="images/crime.png" class="ico">&nbsp;Crime</a>
+                    <a href="#" onclick="setSchemas(['crime']); return false;"><img src="images/crime.png" class="ico">&nbsp;Crime</a>
                 </li>
                 <li>
-                    <a href="#"><img src="images/health.png" class="ico">&nbsp;Health</a>
+                    <a href="#" onclick="setSchemas(['health']); return false;"><img src="images/health.png" class="ico">&nbsp;Health</a>
                 </li>
                 <span id="search">
     <li class="searchbox">
@@ -162,9 +162,10 @@ var zip = url.substr(url.length - 5);
     showMap();
   }
 
-
-   function showMap() {
-       var map = L.map('map').setView([lat,lon], 16);
+var map;
+   function showMap(s) {
+       map = L.map('map').setView([lat,lon], 16);
+       console.log([lat,lon])
       //var data = [];
       L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IjZjNmRjNzk3ZmE2MTcwOTEwMGY0MzU3YjUzOWFmNWZhIn0.Y8bhBaUMqFiPrDRW9hieoQ', {
           maxZoom: 18,
@@ -178,39 +179,78 @@ var zip = url.substr(url.length - 5);
          fillOpacity: 0.5
       }).addTo(map);
 
-      window.EveryBlock.scanEventsBySchemas(zip,["crime","meetups"],function (parsed_json) {
+      
+
+
+
+       }
+   
+
+       var markers = [];
+
+   function setSchemas (s) {
+     window.EveryBlock.scanEventsBySchemas(zip,s,function (parsed_json) {
           // data=[];      
           data = parsed_json;
 
-
+          if (data == null) return;
 
           //fetch the johnson data
-          johnson.go(function  (err, results) {
-            data = data.concat(results)
+          // 
+              // data = data.results;
+
+              removeMarkers();
 
 
 
+              // map.clearLayers();
 
 
+              if (s.indexOf('health') > -1) {
+                johnson.go(function  (err, results) {
+                  data.forEach(function(d)
+                  {
+                    console.log(d);
+                    var str=d.attributes.item_datetime;
+                    // console.log(str);  
+                    
+                    addMarker(d.location_coordinates[0], '<Strong>'+"Event:"+'</Strong>'+d.title+'<br>'+'<Strong>'+"Venue:"+'</Strong>'+d.location_name+'<br>'+'<a target="_blank" class="popup" href="' + d.url + '">'+"More"+'</a>');
+                    
+                  });
+                });
+              } else {
+
+                console.log(data);
+                data.forEach(function(d)
+                {
+                  console.log(d);
+                  var str=d.attributes.item_datetime;
+                  // console.log(str);  
+                  addMarker(d.location_coordinates[0],'<Strong>'+"Event:"+'</Strong>'+d.title+'<br>'+'<Strong>'+"Venue:"+'</Strong>'+d.location_name+'<br>'+'<a target="_blank" class="popup" href="' + d.url + '">'+"More"+'</a>' );
 
 
+                  
+                });
+              }
+        });
+   }
+       
+function addMarker (coords,text) {
+  console.log(coords)
+  var m = L.marker([coords.latitude,coords.longitude]).bindPopup(L.popup({maxWidth:500}).setContent( text )).addTo(map);
 
-          console.log(data);
-          data.forEach(function(d)
-          {
-            console.log(d);
-            var str=d.attributes.item_datetime;
-            // console.log(str);  
-            L.marker([d.location_coordinates[0].latitude,d.location_coordinates[0].longitude]).bindPopup(L.popup({maxWidth:500}).setContent('<Strong>'+"Event:"+'</Strong>'+d.title+'<br>'+'<Strong>'+"Venue:"+'</Strong>'+d.location_name+'<br>'+'<a target="_blank" class="popup" href="' + d.url + '">'+"More"+'</a>' )).addTo(map);
-            
-          });
-      });
+                    markers.push(m);
+}
 
+function removeMarkers () {
+  for (var i = markers.length - 1; i >= 0; i--) {
+    map.removeLayer(markers[i]);
 
+  };
+}
 
-       })}
-   
-        
+// showMap();
+
 // jQuery(document).ready(function($) {
 //   $.ajax({
 //   url : "https://api.everyblock.com/content/chicago/locations/60607/timeline/events/.json?token=818111003c3b49716d369cf290958441685e34c9",  

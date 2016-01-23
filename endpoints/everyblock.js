@@ -52,16 +52,16 @@ function EveryBlock () {
 
 	function scanEventsBySchemas (schema,callback) {
 		getCityForZip(currentZIP,function (cityname) {
-			jsonp_request(getAPIURL('content/'+cityname+'/locations/'+currentZIP+'/timeline')+'&schema='+schema.join('&schema='),function (data) {
+			jsonp_request(getAPIURL('content/'+cityname+'/locations/'+currentZIP+'/timeline')+((schema == null)? '' : '&schema='+schema.join('&schema=')),function (data) {
 				var results = data.results;
 				var filtered = [];
 
 				console.log(results)
 
 				for (var i = 0; i < results.length; i++) {
-					if (schema.indexOf(results[i].schema) > -1) {
+					// if (schema == null || schema.indexOf(results[i].schema) > -1) {
 						filtered.push(results[i]);
-					}
+					// }
 				};
 
 				callback(filtered);
