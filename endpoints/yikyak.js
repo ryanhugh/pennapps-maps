@@ -4,7 +4,7 @@
 
 
 function YikYak () {
-	this.url = "http://localhost/get"
+	this.url = 'http://162.243.4.193/get'
 }
 
 
