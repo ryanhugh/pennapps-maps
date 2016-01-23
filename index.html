@@ -151,7 +151,7 @@ function getLocation() {
         alert("No location support in this browser");
     }
 }
-function geolocate () {
+function geolocate (position) {
 	EveryBlock.zipFromLatLon(position.coords.latitude,position.coords.longitude,function (zip) {
 		window.location = "./mappy.html?zipcode="+zip;
 	})
