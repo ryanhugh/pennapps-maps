@@ -5,8 +5,10 @@ var baseUrl = ''
 function EveryBlock () {
 
 	var currentZIP;
-	function scanLocation (callback) {
+	var currentCity;
+	function scanTimeline (callback) {
 		getCityForZip(currentZIP,function (cityname) {
+
 			callForLocation(cityname,currentZIP,function (data) {
 				
 
@@ -17,8 +19,34 @@ function EveryBlock () {
 		});
 	}
 
+	function scanEvents(callback) {
+		getCityForZip(currentZIP,function (cityname) {
+			jsonp_request(getAPIURL('content/'+cityname+'/locations/'+currentZIP+'/timeline'),callback);
+		});
+	}
 
+	function scanNews (callback) {
+		getCityForZip(currentZIP,function (cityname) {
+			jsonp_request(getAPIURL('content/'+cityname+'/topnews/events'),callback);
+		});
+	}
 
+	function scanBySchemas (schema,callback) {
+		getCityForZip(currentZIP,function (cityname) {
+			jsonp_request(getAPIURL('content/'+cityname+'/locations/'+currentZIP+'/timeline/events'),function (data) {
+				var results = data.results;
+				var filtered = [];
+
+				for (var i = 0; i < results.length; i++) {
+					if (schema.indexOf(results[i].schema) > -1) {
+						filtered.push(results[i]);
+					}
+				};
+
+				callback(filtered);
+			});
+		});
+	}
 
 	function Location (argument) {
 		// body...
@@ -40,6 +68,7 @@ function EveryBlock () {
 	}
 
 	function getCityForZip (zip, callback) {
+		if (currentCity) callback(currentCity);
 		var isDone = false;
 		jsonp_request(getAPIURL('content'),function (data) {
 			data.forEach(function (item,index) {
@@ -58,6 +87,7 @@ function EveryBlock () {
 						if (zipdata[j].name == zip) {
 							
 							callback(city);
+							currentCity = cityname;
 							isDone = true;
 							return;
 						}
@@ -84,9 +114,21 @@ function EveryBlock () {
 	}
 
 	return {
-		scanLocation:function (zip,callback) {
+		scanEvents:function (zip,callback) {
 			currentZIP = zip;
-			scanLocation(callback);
+			scanEvents(callback);
+		},
+		scanTimeline:function (zip,callback) {
+			currentZIP = zip;
+			scanTimeline(callback);
+		},
+		scanNews:function (zip,callback) {
+			currentZIP = zip;
+			scanNews(callback);
+		},
+		scanBySchemas:function (zip,schema,callback) {
+			currentZIP = zip;
+			scanBySchemas(schema,callback)
 		}
 	};
 
@@ -94,10 +136,21 @@ function EveryBlock () {
 }
 
 
-EveryBlock().scanLocation("02117",function (d) {
-	console.log("result",d);
+EveryBlock().scanEvents("02117",function (d) {
+	console.log("events",d);
 });
 
+EveryBlock().scanTimeline("02117",function (d) {
+	console.log("timeline",d);
+});
+
+EveryBlock().scanNews("02117",function (d) {
+	console.log("news",d);
+});
+
+EveryBlock().scanBySchemas("02117",["meetups"],function (d) {
+	console.log("schema",d);
+});
 
 
 
