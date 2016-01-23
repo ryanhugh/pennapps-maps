@@ -9,7 +9,7 @@
 <script type="text/javascript" src="endpoints/everyblock.js"></script>    
 </head>
     
-<body>
+<body style="margin:0;padding:0;">
 	<div id="map" style="width: 100%; height: 100%"></div>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 	<script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
@@ -17,7 +17,10 @@
     
 	<script>
 
-  var parsed = parseURL(window.location.href);
+var url = document.location.href
+var zip = url.substr(url.length - 5);
+
+  var parsed = parseURL(url);
   function parseURL(urlString) {
     var parser = document.createElement('a');
     parser.href = urlString;
@@ -43,14 +46,49 @@
   var lat = args['lat'];
   var lon = args['lon'];
 
-        var map = L.map('map').setView([lat,lon], 16);
-        //var data = [];
-        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IjZjNmRjNzk3ZmE2MTcwOTEwMGY0MzU3YjUzOWFmNWZhIn0.Y8bhBaUMqFiPrDRW9hieoQ', {
-            maxZoom: 18,
-            attribution: ' ',
-            dragging: 'true',
-            id: 'mapbox.streets',
-        }).addTo(map);
+  if (!lat || !lon) {
+    EveryBlock.latLonFromZIP(zip,function (data) {
+      lat = data.lat;
+      lon = data.lng;
+
+      showMap();
+
+
+    });
+  } else {
+    showMap();
+  }
+
+
+       function showMap() {
+           var map = L.map('map').setView([lat,lon], 16);
+          //var data = [];
+          L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IjZjNmRjNzk3ZmE2MTcwOTEwMGY0MzU3YjUzOWFmNWZhIn0.Y8bhBaUMqFiPrDRW9hieoQ', {
+              maxZoom: 18,
+              attribution: ' ',
+              dragging: 'true',
+              id: 'mapbox.streets',
+          }).addTo(map); 
+          var circle = L.circle([lat,lon], 10, {
+             color: 'red',
+             fillColor: '#f03',
+             fillOpacity: 0.5
+          }).addTo(map);
+
+          window.EveryBlock.scanEvents(zip,function (parsed_json) {
+          data=[];      
+          data = parsed_json.results;
+          console.log(data);
+          data.forEach(function(d)
+          {
+            console.log(d);
+            var str=d.attributes.item_datetime;
+            console.log(str);  L.marker([d.location_coordinates[0].latitude,d.location_coordinates[0].longitude]).bindPopup(L.popup({maxWidth:500}).setContent('<Strong>'+"Event:"+'</Strong>'+d.title+'<br>'+'<Strong>'+"Venue:"+'</Strong>'+d.location_name+'<br>'+'<a target="_blank" class="popup" href="' + d.url + '">'+"More"+'</a>' )).addTo(map);
+            
+          });
+        })
+
+       }
         
 // jQuery(document).ready(function($) {
 //   $.ajax({
@@ -63,23 +101,10 @@
 //   });
 // });
 
-var url = document.location.href
-var zip = url.substr(url.length - 5);
 
 
 
-window.EveryBlock.scanEvents(zip,function (parsed_json) {
-  data=[];      
-  data = parsed_json.results;
-  console.log(data);
-  data.forEach(function(d)
-  {
-    console.log(d);
-    var str=d.attributes.item_datetime;
-    console.log(str);  L.marker([d.location_coordinates[0].latitude,d.location_coordinates[0].longitude]).bindPopup(L.popup({maxWidth:500}).setContent('<Strong>'+"Event:"+'</Strong>'+d.title+'<br>'+'<Strong>'+"Venue:"+'</Strong>'+d.location_name+'<br>'+'<a target="_blank" class="popup" href="' + d.url + '">'+"More"+'</a>' )).addTo(map);
-    
-  });
-})
+
 
 Twilio.sendMessage('7816975494',"Satty");
 

@@ -115,6 +115,13 @@ function EveryBlock () {
 		});
 	}
 
+	function getLatLonFromZIP (zip,callback) {
+		jsonp_request("http://maps.googleapis.com/maps/api/geocode/json?address="+zip,function (data) {
+			var results = data.results;
+			callback(results[0].geometry.location);
+		});
+	}
+
 	function parseURL(urlString) {
 		var parser = document.createElement('a');
 		parser.href = urlString;
@@ -149,6 +156,9 @@ function EveryBlock () {
 		},
 		zipFromLatLon:function (lat,lon,callback) {
 			getZIPForCoordinates(lat,lon,callback);
+		},
+		latLonFromZIP:function (zip,callback) {
+			getLatLonFromZIP(zip,callback);
 		}
 	};
 
