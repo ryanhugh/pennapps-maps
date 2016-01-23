@@ -137,7 +137,7 @@
 
 		<h4>or</h4>
 
-		<form onsubmit="getLocation();">
+		<form onsubmit="getLocation(); return false;">
 			<input type="submit" value="Use Current Location" id="submitcurrent">
 		</form>
 
@@ -153,7 +153,7 @@ function getLocation() {
 }
 function geolocate (position) {
 	EveryBlock.zipFromLatLon(position.coords.latitude,position.coords.longitude,function (zip) {
-		window.location = "./mappy.html?lat="+position.coords.latitude+"&lon="+position.coords.longitude+"zipcode="+zip;
+		window.location.href = "mappy.html?lat="+position.coords.latitude+"&lon="+position.coords.longitude+"zipcode="+zip;
 	})
 }
 function showPosition(position) {
