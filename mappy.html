@@ -208,7 +208,7 @@ var map;
 
               if (s.indexOf('health') > -1) {
                 johnson.go(function  (err, results) {
-                  data.forEach(function(d)
+                  results.forEach(function(d)
                   {
                     console.log(d);
                     var str=d.attributes.item_datetime;
