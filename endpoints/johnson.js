@@ -81,6 +81,14 @@ Johnson.prototype.go = function (callback) {
 			}
 
 
+			//coffee 
+			var foods = ['coffee','crackers','candy','turkey','cheesecake','ice cream'];
+
+			item.food = foods[parseInt(Math.random()*foods.length)]
+
+			item.stepCount = Math.random()*4000+1000
+
+
 
 
 
