@@ -5,9 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
   <script type="text/javascript" src="jsonp.js"></script>
+  
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.js"></script>
 <script type="text/javascript" src="sms.js"></script>    
 <script type="text/javascript" src="endpoints/everyblock.js"></script>    
 <script type="text/javascript" src="endpoints/johnson.js"></script> 
+<script type="text/javascript" src="endpoints/yikyak.js"></script> 
 
 <style>
         body {
@@ -205,8 +208,33 @@ var map;
 
               // map.clearLayers();
 
+              if (s[0]=='yikyak') {
+                yikYak.go(function (err, results) {
 
-              if (s.indexOf('health') > -1) {
+                   results.forEach(function(d)
+                  {
+                    console.log(d);
+                    // var str=d.attributes.item_datetime;
+                    // console.log(str);  
+                    
+                    var html = [];
+
+                    html.push('<Strong>Message:</Strong>')
+                    html.push(d.message)
+                    if (d.url) {
+                      html.push('<br><Strong>Img:</Strong>')
+                      html.push('<br><a target="_blank" class="popup" href="' + d.url + '">'+"Img"+'</a>')
+                    };
+                    addMarker(d.location_coordinates[0],html.join(''));
+                    
+                  });
+
+
+                }.bind(this))
+              }
+
+
+              else if (s.indexOf('health') > -1) {
                 johnson.go(function  (err, results) {
                   results.forEach(function(d)
                   {
