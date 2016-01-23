@@ -40,7 +40,7 @@ YikYak.prototype.fire = function (config, callback) {
 	}.bind(this)
 
 
-	xmlhttp.open('GET', this.url+'/'+config.lat+'/'+config.long, true);
+	xmlhttp.open('GET', this.url + '/' + config.lat + '/' + config.long, true);
 	xmlhttp.send();
 };
 
@@ -73,7 +73,7 @@ YikYak.prototype.go = function (callback) {
 			}.bind(this))
 
 
-			callback(null,results)
+			callback(null, results)
 
 
 		}.bind(this))

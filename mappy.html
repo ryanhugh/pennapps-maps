@@ -7,6 +7,7 @@
   <script type="text/javascript" src="jsonp.js"></script>
 <script type="text/javascript" src="sms.js"></script>    
 <script type="text/javascript" src="endpoints/everyblock.js"></script>    
+<script type="text/javascript" src="endpoints/johnson.js"></script>    
 </head>
     
 <body style="margin:0;padding:0;">
@@ -14,6 +15,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 	<script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
     <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="moment.js"></script>
     
 	<script>
 
@@ -78,15 +80,34 @@ var zip = url.substr(url.length - 5);
           window.EveryBlock.scanEvents(zip,function (parsed_json) {
           data=[];      
           data = parsed_json.results;
+
+
+
+          //fetch the johnson data
+          johnson.go(function  (err, results) {
+            data = data.concat(results)
+
+
+
+
+
+
+
+
+
           console.log(data);
           data.forEach(function(d)
           {
             console.log(d);
             var str=d.attributes.item_datetime;
-            console.log(str);  L.marker([d.location_coordinates[0].latitude,d.location_coordinates[0].longitude]).bindPopup(L.popup({maxWidth:500}).setContent('<Strong>'+"Event:"+'</Strong>'+d.title+'<br>'+'<Strong>'+"Venue:"+'</Strong>'+d.location_name+'<br>'+'<a target="_blank" class="popup" href="' + d.url + '">'+"More"+'</a>' )).addTo(map);
+            // console.log(str);  
+            L.marker([d.location_coordinates[0].latitude,d.location_coordinates[0].longitude]).bindPopup(L.popup({maxWidth:500}).setContent('<Strong>'+"Event:"+'</Strong>'+d.title+'<br>'+'<Strong>'+"Venue:"+'</Strong>'+d.location_name+'<br>'+'<a target="_blank" class="popup" href="' + d.url + '">'+"More"+'</a>' )).addTo(map);
             
           });
         })
+
+          }.bind(this))
+
 
        }
         
@@ -106,7 +127,7 @@ var zip = url.substr(url.length - 5);
 
 
 
-Twilio.sendMessage('7816975494',"Satty");
+// Twilio.sendMessage('7816975494',"Satty");
 
     </script>
     
