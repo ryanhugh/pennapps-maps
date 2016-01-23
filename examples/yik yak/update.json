@@ -1,0 +1,24 @@
+
+// this is from https://www.yikyak.com/api/proxy/v1/notifications?userLat=39.9522941&userLong=-75.190877
+//and includes a bunch of headers like auth
+
+
+[{
+	"_id": "568818f162439d70079b10da",
+	"thingType": "comment",
+	"thingID": "R/5687414ef1158df65859229d59144",
+	"replyId": "R/568818f13d5d00bc775c324d9151e",
+	"userID": "40427DD1F2DDC9F9FAE8A3BA6BE17134",
+	"reason": "comment",
+	"key": "40427DD1F2DDC9F9FAE8A3BA6BE17134_R/5687414ef1158df65859229d59144_comment",
+	"hash_key": "40427DD1F2DDC9F9FAE8A3BA6BE17134:R/5687414ef1158df65859229d59144:SomeoneElseRepliedToTheYak",
+	"subject": "Someone else also replied",
+	"content": "I see everyone at parties back home and it's ve...\" to the yak \"Is it normal to talk t...",
+	"body": "Someone else also replied: \"I see everyone at parties back home and it's ve...\" to the yak \"Is it normal to talk t...\"",
+	"__v": 0,
+	"count": 0,
+	"status": "read",
+	"created": "2016-01-02T18:37:37.620Z",
+	"updated": "2016-01-02T18:37:37.620Z",
+	"priority": "normal"
+}]
