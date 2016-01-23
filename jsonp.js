@@ -18,6 +18,9 @@ function jsonp_request(url,callback,use_ts,return_string,add_random_token){
 	} else {
 		callbackID = 0;
 	}
+
+	callbackID = Math.floor(Math.random() * 100000);
+
 	var urlArgs = {};
 	ASSET_PATH = 'http://assets.topperstudios.com/'
 	if (use_ts){

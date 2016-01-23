@@ -31,8 +31,9 @@ function EveryBlock () {
 
 	function callForLocation (cityName,zip,callback) {
 		var url = getAPIURL('content/'+cityName.toLowerCase()+'/locations/'+zip+'/timeline');
-
+		console.log(url)
 		jsonp_request(url,function (data) {
+			console.log(data,'for',url)
 			callback(data);
 		});
 
@@ -41,26 +42,45 @@ function EveryBlock () {
 	function getCityForZip (zip, callback) {
 		var isDone = false;
 		jsonp_request(getAPIURL('content'),function (data) {
-			for (var i = 0; i < data.length; i++) {
-				if (isDone) return;
-				var cityname = data[i].short_name;
-				jsonp_request(getAPIURL('content/'+cityname+'/zipcodes'),
-					(function (cn) {
-						return function (zipdata) {
-							console.log(zipdata);
-							for (var j = 0; j < zipdata.length; j++) {
-								if (zipdata[j].name == zip) {
-									// console.log("approved");
-									callback(cn);
-									isDone = true;
-									return;
-								}
-							};
+			data.forEach(function (item,index) {
+				var cityname = item.short_name;
+			
+				var url = getAPIURL('content/'+cityname+'/zipcodes');
+				
+
+				jsonp_request(url,function(zipdata){
+
+					if (!zipdata) return;
+					var city = parseURL(zipdata[0].url).hostname.split(".")[0];
+
+					
+					for (var j = 0; j < zipdata.length; j++) {
+						if (zipdata[j].name == zip) {
+							
+							callback(city);
+							isDone = true;
+							return;
 						}
-					})(cityname)
-				);
-			};
+					};
+				})
+
+			});
 		});
+	}
+
+	function parseURL(urlString) {
+		var parser = document.createElement('a');
+		parser.href = urlString;
+		var obj = {
+			protocol:parser.protocol, 		// => "http:"
+			hostname:parser.hostname, 		// => "example.com"
+			port:parser.port, 			    // => "3000"
+			pathname:parser.pathname, 		// => "/pathname/"
+			search:parser.search, 			// => "?search=test"
+			hash:parser.hash, 			    // => "#hash"
+			host:parser.host 			    // => "example.com:3000"
+		};
+		return obj;
 	}
 
 	return {
@@ -74,6 +94,9 @@ function EveryBlock () {
 }
 
 
+EveryBlock().scanLocation("02117",function (d) {
+	console.log("result",d);
+});
 
 
 
