@@ -27,7 +27,7 @@ function EveryBlock () {
 
 	function scanNews (callback) {
 		getCityForZip(currentZIP,function (cityname) {
-			jsonp_request(getAPIURL('content/'+cityname+'/topnews/events'),callback);
+			jsonp_request(getAPIURL('content/'+cityname+'/topnews'),callback);
 		});
 	}
 
@@ -137,6 +137,20 @@ function EveryBlock () {
 		});
 	}
 
+	function searchByName (name,callback) {
+		scanNews(function (data) {
+			console.log("searchByName")
+			var results = data.results;
+			var searched = [];
+			for (var i = 0; i < results.length; i++) {
+				if ((results[i].title.indexOf(name) > -1) || (results[i].schema.indexOf(name) > -1)) {
+					searched.push(results[i]);
+				}
+			};
+			callback(searched);
+		});
+	}
+
 	function getLatLonFromZIP (zip,callback) {
 		jsonp_request("http://maps.googleapis.com/maps/api/geocode/json?address="+zip,function (data) {
 			var results = data.results;
@@ -191,6 +205,9 @@ function EveryBlock () {
 		},
 		latLonFromZIP:function (zip,callback) {
 			getLatLonFromZIP(zip,callback);
+		},
+		searchByName:function (name,callback) {
+			searchByName(name,callback);
 		}
 	};
 
@@ -214,7 +231,7 @@ function EveryBlock () {
 // 	console.log("schema",d);
 // });
 
-EveryBlock().zipFromLatLon
+// EveryBlock().zipFromLatLon
 
 
 window.EveryBlock = new EveryBlock();
