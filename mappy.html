@@ -62,31 +62,30 @@ var zip = url.substr(url.length - 5);
   }
 
 
-       function showMap() {
-           var map = L.map('map').setView([lat,lon], 16);
-          //var data = [];
-          L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IjZjNmRjNzk3ZmE2MTcwOTEwMGY0MzU3YjUzOWFmNWZhIn0.Y8bhBaUMqFiPrDRW9hieoQ', {
-              maxZoom: 18,
-              attribution: ' ',
-              dragging: 'true',
-              id: 'mapbox.streets',
-          }).addTo(map); 
-          var circle = L.circle([lat,lon], 10, {
-             color: 'red',
-             fillColor: '#f03',
-             fillOpacity: 0.5
-          }).addTo(map);
+   function showMap() {
+       var map = L.map('map').setView([lat,lon], 16);
+      //var data = [];
+      L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IjZjNmRjNzk3ZmE2MTcwOTEwMGY0MzU3YjUzOWFmNWZhIn0.Y8bhBaUMqFiPrDRW9hieoQ', {
+          maxZoom: 18,
+          attribution: ' ',
+          dragging: 'true',
+          id: 'mapbox.streets',
+      }).addTo(map); 
+      var circle = L.circle([lat,lon], 10, {
+         color: 'red',
+         fillColor: '#f03',
+         fillOpacity: 0.5
+      }).addTo(map);
 
-          window.EveryBlock.scanEvents(zip,function (parsed_json) {
-          data=[];      
-          data = parsed_json.results;
+      window.EveryBlock.scanEventsBySchemas(zip,["crime","meetups"],function (parsed_json) {
+          // data=[];      
+          data = parsed_json;
 
 
 
           //fetch the johnson data
           johnson.go(function  (err, results) {
             data = data.concat(results)
-
 
 
 
@@ -104,12 +103,12 @@ var zip = url.substr(url.length - 5);
             L.marker([d.location_coordinates[0].latitude,d.location_coordinates[0].longitude]).bindPopup(L.popup({maxWidth:500}).setContent('<Strong>'+"Event:"+'</Strong>'+d.title+'<br>'+'<Strong>'+"Venue:"+'</Strong>'+d.location_name+'<br>'+'<a target="_blank" class="popup" href="' + d.url + '">'+"More"+'</a>' )).addTo(map);
             
           });
-        })
-
-          }.bind(this))
+      });
 
 
-       }
+
+       })}
+   
         
 // jQuery(document).ready(function($) {
 //   $.ajax({
