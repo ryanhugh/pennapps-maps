@@ -8,6 +8,8 @@ function ZipPopup() {
 	$(function () {
 
 		this.zipCodeTextBox = document.getElementById('zipCodeTextBoxId')
+
+		$('#myModal').modal('toggle')
 	}.bind(this))
 
 }
@@ -15,9 +17,9 @@ function ZipPopup() {
 
 
 ZipPopup.prototype.go = function () {
-	console.log('User entered:',this.zipCodeTextBox.value);
+	console.log('User entered:', this.zipCodeTextBox.value);
 
-$('#myModal').modal('toggle')
+	$('#myModal').modal('toggle')
 
 };
 
