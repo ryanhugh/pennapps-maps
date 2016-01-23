@@ -4,7 +4,9 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
-    
+  <script type="text/javascript" src="jsonp.js"></script>
+<script type="text/javascript" src="sms.js"></script>    
+<script type="text/javascript" src="endpoints/everyblock.js"></script>    
 </head>
     
 <body>
@@ -23,12 +25,23 @@
             id: 'mapbox.streets',
         }).addTo(map);
         
-jQuery(document).ready(function($) {
-  $.ajax({
-  url : "https://api.everyblock.com/content/chicago/locations/60607/timeline/events/.json?token=818111003c3b49716d369cf290958441685e34c9",  
-  dataType : "json",
-  synchronous: "true",      
-  success : function(parsed_json) {
+// jQuery(document).ready(function($) {
+//   $.ajax({
+//   url : "https://api.everyblock.com/content/chicago/locations/60607/timeline/events/.json?token=818111003c3b49716d369cf290958441685e34c9",  
+//   dataType : "json",
+//   synchronous: "true",      
+//   success : function(parsed_json) {
+  
+//   }
+//   });
+// });
+
+var url = document.location.href
+var zip = url.substr(url.length - 5);
+
+
+
+window.EveryBlock.scanEvents(zip,function (parsed_json) {
   data=[];      
   data = parsed_json.results;
   console.log(data);
@@ -36,12 +49,13 @@ jQuery(document).ready(function($) {
   {
     console.log(d);
     var str=d.attributes.item_datetime;
-    console.log(str);  L.marker([d.location_coordinates[0].latitude,d.location_coordinates[0].longitude]).bindPopup(L.popup({maxWidth:500}).setContent('<Strong>'+"Event:"+'</Strong>'+d.title+'<br>'+'<Strong>'+"Venue:"+'</Strong>'+d.location_name+'<br>'+'<Strong>'+"Date&Time:"+'</Strong>'+d.attributes.item_datetime+'<br>'+'<a target="_blank" class="popup" href="' + d.url + '">'+"More"+'</a>' )).addTo(map);
+    console.log(str);  L.marker([d.location_coordinates[0].latitude,d.location_coordinates[0].longitude]).bindPopup(L.popup({maxWidth:500}).setContent('<Strong>'+"Event:"+'</Strong>'+d.title+'<br>'+'<Strong>'+"Venue:"+'</Strong>'+d.location_name+'<br>'+'<a target="_blank" class="popup" href="' + d.url + '">'+"More"+'</a>' )).addTo(map);
     
   });
-  }
-  });
-});
+})
+
+Twilio.sendMessage('7816975494',"Satty");
+
     </script>
     
     </body>

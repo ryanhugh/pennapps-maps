@@ -98,6 +98,23 @@ function EveryBlock () {
 		});
 	}
 
+	function getZIPForCoordinates (lat,lon,callback) {
+		jsonp_request("http://api.geonames.org/findNearbyPostalCodesJSON?lat="+lat+"&lng="+lon+"&username=apunjabi",function (data) {
+			var results = data.postalCodes;
+			var minDist = 10000000000, index = 0;
+			for (var i = 0; i < results.length; i++) {
+				var dist = parseFloat(results[i].distance);
+				if (dist < minDist) {
+					minDist = dist;
+					index = i;
+				}
+			};
+
+			callback(results[i].postalCode);
+
+		});
+	}
+
 	function parseURL(urlString) {
 		var parser = document.createElement('a');
 		parser.href = urlString;
@@ -129,6 +146,9 @@ function EveryBlock () {
 		scanBySchemas:function (zip,schema,callback) {
 			currentZIP = zip;
 			scanBySchemas(schema,callback)
+		},
+		zipFromLatLon:function (lat,lon,callback) {
+			getZIPForCoordinates(lat,lon,callback);
 		}
 	};
 
@@ -140,18 +160,19 @@ EveryBlock().scanEvents("02117",function (d) {
 	console.log("events",d);
 });
 
-EveryBlock().scanTimeline("02117",function (d) {
-	console.log("timeline",d);
-});
+// EveryBlock().scanTimeline("02117",function (d) {
+// 	console.log("timeline",d);
+// });
 
-EveryBlock().scanNews("02117",function (d) {
-	console.log("news",d);
-});
+// EveryBlock().scanNews("02117",function (d) {
+// 	console.log("news",d);
+// });
 
 EveryBlock().scanBySchemas("02117",["meetups"],function (d) {
 	console.log("schema",d);
 });
 
+EveryBlock().zipFromLatLon
 
 
 window.EveryBlock = new EveryBlock();

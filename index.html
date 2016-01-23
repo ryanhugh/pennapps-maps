@@ -9,6 +9,7 @@
 	<script type="text/javascript" src="ZipPopup.js"></script>
 	<script type="text/javascript" src="endpoints/yikyak.js"></script>
 	<script type="text/javascript" src="jsonp.js"></script>
+	<script type="text/javascript" src="sms.js"></script>
 	<script type="text/javascript" src="endpoints/everyblock.js"></script>
 
 
@@ -129,20 +130,37 @@
 		<h1>Discover your Neighborhood</h1>
 
 		<h5>Enter your zipcode here:</h5>
-		<form action="map.html" method="GET">
+		<form action="mappy.html" method="GET">
 			<input type="text" name="zipcode">
 			<input type="submit" value="Submit" id="submitzip">
 		</form>
 
 		<h4>or</h4>
 
-		<form>
+		<form onsubmit="getLocation();">
 			<input type="submit" value="Use Current Location" id="submitcurrent">
 		</form>
 
 
 	</div>
-
+<script type="text/javascript">
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(geolocate);
+    } else {
+        alert("No location support in this browser");
+    }
+}
+function geolocate () {
+	EveryBlock.zipFromLatLon(position.coords.latitude,position.coords.longitude,function (zip) {
+		window.location = "./mappy.html?zipcode="+zip;
+	})
+}
+function showPosition(position) {
+    x.innerHTML = "Latitude: " + position.coords.latitude + 
+    "<br>Longitude: " + position.coords.longitude; 
+}
+</script>
 
 </body>
 </html>
