@@ -42,7 +42,7 @@ YikYak.prototype.go = function(callback) {
 
 
 	xmlhttp.open('GET', this.url, true);
-	xmlhttp.send(JSON.stringify(body));
+	xmlhttp.send();
 };
 
 var instance = new YikYak();
