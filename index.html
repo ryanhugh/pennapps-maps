@@ -14,40 +14,72 @@
 
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
 
+	<nav class="navbar navbar-inverse">
+		<div class="container">
 
-	<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">PennApps Hackathon Maps project</h4>
-				</div>
-				<div class="modal-body">
+			<div class="container-fluid"> 
+				<div class="navbar-header"> 
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-9" aria-expanded="false"> 
+						<span class="sr-only">Toggle navigation</span> 
+						<span class="icon-bar">
+						</span> 
+						<span class="icon-bar">
+						</span> 
+						<span class="icon-bar">
+						</span> 
+					</button> 
+					<a class="navbar-brand" href="#">Brand</a> 
+				</div> 
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9"> 
+					<ul class="nav navbar-nav"> 
+						<li class="active">
+							<a href="#">Home</a>
+						</li> 
+						<li>
+							<a href="#">Link</a>
+						</li> 
+						<li>
+							<a href="#">Link</a>
+						</li> 
+					</ul> 
+				</div> 
+			</div> 
+		</nav>
 
-					<span style="font-weight:19px">
 
-						Welcome to our hackathon project!   
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">PennApps Hackathon Maps project</h4>
+					</div>
+					<div class="modal-body">
 
-						<br>
-						<br>
-						 Enter your zip code to see all sorts of awesome stuff around you. 
-					</span>
+						<span style="font-weight:19px">
 
-					<div class="input-group" style="    max-width: 300px;padding-top: 22px;">
-						<input type="text" class="form-control" placeholder="Zip code ..." id="zipCodeTextBoxId">
-						<span class="input-group-btn">
-							<button class="btn btn-default" type="button" onclick="zipPopup.go()">Go!</button>
+							Welcome to our hackathon project!   
+
+							<br>
+							<br>
+							Enter your zip code to see all sorts of awesome stuff around you. 
 						</span>
-					</div><!-- /input-group -->
 
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" onclick="zipPopup.go()">Go</button>
+						<div class="input-group" style="    max-width: 300px;padding-top: 22px;">
+							<input type="text" class="form-control" placeholder="Zip code ..." id="zipCodeTextBoxId">
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button" onclick="zipPopup.go()">Go!</button>
+							</span>
+						</div><!-- /input-group -->
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" onclick="zipPopup.go()">Go</button>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
 </body>
 </html>
