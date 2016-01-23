@@ -1,7 +1,30 @@
 <!DOCTYPE html>
 <html>
+<head>
+	<title></title>
+	<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.12.4/mapbox-gl.js'></script>
+	<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.12.4/mapbox-gl.css' rel='stylesheet' />
+	<script type="text/javascript" src="./jsonp.js"></script>
+	<script type="text/javascript" src="./main.js"></script>
+	<style type="text/css">
+
+	</style>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages. hiiis</p>
+
+<script type="text/javascript">
+	
+	getCityForZip('93721',function (data) {
+		console.log(data);
+	});
+
+	currentZIP = "93721";
+
+	scanLocation(function (data) {
+		console.log(data);
+	});
+
+</script>
+
 </body>
 </html>
