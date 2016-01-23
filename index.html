@@ -153,13 +153,14 @@ function getLocation() {
 }
 function geolocate (position) {
 	EveryBlock.zipFromLatLon(position.coords.latitude,position.coords.longitude,function (zip) {
-		window.location = "./mappy.html?zipcode="+zip;
+		window.location = "./mappy.html?lat="+position.coords.latitude+"&lon="+position.coords.longitude+"zipcode="+zip;
 	})
 }
 function showPosition(position) {
     x.innerHTML = "Latitude: " + position.coords.latitude + 
     "<br>Longitude: " + position.coords.longitude; 
 }
+// geolocate({coords:{latitude:39.9597,longitude:-75.1968}});
 </script>
 
 </body>

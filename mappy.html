@@ -16,7 +16,34 @@
     <script src="http://d3js.org/d3.v3.min.js"></script>
     
 	<script>
-        var map = L.map('map').setView([41.8767,-87.6537], 16);
+
+  var parsed = parseURL(window.location.href);
+  function parseURL(urlString) {
+    var parser = document.createElement('a');
+    parser.href = urlString;
+    var obj = {
+      protocol:parser.protocol,     // => "http:"
+      hostname:parser.hostname,     // => "example.com"
+      port:parser.port,           // => "3000"
+      pathname:parser.pathname,     // => "/pathname/"
+      search:parser.search,       // => "?search=test"
+      hash:parser.hash,           // => "#hash"
+      host:parser.host          // => "example.com:3000"
+    };
+    return obj;
+  }
+
+  var args = parsed.search.substr(1).split('&');
+
+  for (var i = 0; i < args.length; i++) {
+    var s = args[i].split('=');
+    args[s[0]] = s[1];
+  };
+
+  var lat = args['lat'];
+  var lon = args['lon'];
+
+        var map = L.map('map').setView([lat,lon], 16);
         //var data = [];
         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IjZjNmRjNzk3ZmE2MTcwOTEwMGY0MzU3YjUzOWFmNWZhIn0.Y8bhBaUMqFiPrDRW9hieoQ', {
             maxZoom: 18,

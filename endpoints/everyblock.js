@@ -110,7 +110,7 @@ function EveryBlock () {
 				}
 			};
 
-			callback(results[i].postalCode);
+			callback(results[index].postalCode);
 
 		});
 	}
