@@ -7,6 +7,8 @@
   <script type="text/javascript" src="jsonp.js"></script>
 <script type="text/javascript" src="sms.js"></script>    
 <script type="text/javascript" src="endpoints/everyblock.js"></script>    
+  <script type="text/javascript" src="endpoints/yikyak.js"></script>
+
 </head>
     
 <body>
@@ -72,13 +74,21 @@ window.EveryBlock.scanEvents(zip,function (parsed_json) {
   data=[];      
   data = parsed_json.results;
   console.log(data);
-  data.forEach(function(d)
-  {
-    console.log(d);
-    var str=d.attributes.item_datetime;
-    console.log(str);  L.marker([d.location_coordinates[0].latitude,d.location_coordinates[0].longitude]).bindPopup(L.popup({maxWidth:500}).setContent('<Strong>'+"Event:"+'</Strong>'+d.title+'<br>'+'<Strong>'+"Venue:"+'</Strong>'+d.location_name+'<br>'+'<a target="_blank" class="popup" href="' + d.url + '">'+"More"+'</a>' )).addTo(map);
+
+  //and get the yik yak data
+  yikYak.go(function (err,results) {
+    data = data.concat(results)
     
-  });
+
+
+    data.forEach(function(d)
+    {
+      console.log(d);
+      var str=d.attributes.item_datetime;
+      console.log(str);  L.marker([d.location_coordinates[0].latitude,d.location_coordinates[0].longitude]).bindPopup(L.popup({maxWidth:500}).setContent('<Strong>'+"Event:"+'</Strong>'+d.title+'<br>'+'<Strong>'+"Venue:"+'</Strong>'+d.location_name+'<br>'+'<a target="_blank" class="popup" href="' + d.url + '">'+"More"+'</a>' )).addTo(map);
+      
+    });
+  }.bind(this))
 })
 
 Twilio.sendMessage('7816975494',"Satty");

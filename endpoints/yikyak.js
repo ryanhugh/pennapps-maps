@@ -70,6 +70,10 @@ YikYak.prototype.go = function (callback) {
 
 				post.comment_count = post.comments
 
+				post.attributes = {
+					// date
+				}
+
 			}.bind(this))
 
 
@@ -89,6 +93,6 @@ window.yikYak = instance
 
 
 
-instance.go(function (err, response) {
-	console.log(err, response);
-}.bind(this))
+// instance.go(function (err, response) {
+// 	console.log(err, response);
+// }.bind(this))
