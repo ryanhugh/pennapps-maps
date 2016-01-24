@@ -43,6 +43,11 @@ function Chat() {
 
 
 Chat.prototype.addMsg = function (userId, value) {
+	if (userId === undefined || value === undefined) {
+		return;
+	};
+
+
 	if (this.userId == userId) {
 		this.chatMessages.innerHTML += '<div style="display:inline-block;min-width:47px;text-align: right;font-weight:bold;font-size: 14px;">You</div>: &#09;' + value + '<br>'
 	}
