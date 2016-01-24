@@ -68,6 +68,10 @@
             height: 20px;
             vertical-align: text-bottom;
         }
+         .ico2 {
+            height: 30px;
+            vertical-align: text-bottom;
+        }
         input {
             border: none;
             border-radius: 5px;
@@ -93,6 +97,55 @@
         #search {
             float: right;
         }
+
+        #leaderboard {
+          width:0%;
+          height:100%;
+          position:fixed;
+          right:0px;
+          top:60px;
+          background-color: rgba(0,0,0,.7);
+          z-index: 9999;
+          -webkit-transition: width 1s ease-in-out;
+          color:#fff;
+          padding-top:30px;
+
+          text-align: center;
+          font-family: "Roboto", sans-serif;
+            font-size: 18pt;
+            letter-spacing: 1.5pt;
+          font-weight: bold;
+
+        }
+        table {
+          font-size:12pt;
+          width:80%;
+          margin:0 auto;
+          text-align: center;
+          color:#fff;
+          border-collapse: collapse;
+          margin-top:20px;
+        }
+        tr:first-child {
+          border-top:none;
+        }
+        tr {
+          font-size:12pt;
+          border: solid;
+          border-width: 1px 0;
+          border-color: rgba(225,225,225,0.1);
+          padding:5px 5px 5px 5px;
+        }
+        th {
+          font-size:12pt;
+           padding:10px 10px 10px 10px;
+
+        }
+        td {
+          font-size:11pt;
+          padding:7px 7px 7px 7px;
+        }
+
     </style>
 
 </head>
@@ -106,13 +159,13 @@
             </li>
 
                 <li>
-                    <a href="#" onclick="setSchemas(['health']); return false;"><img src="images/health.png" class="ico">&nbsp;Status updates</a>
+                    <a href="#" onclick="setSchemas(['events']); document.getElementById('leaderboard').style.width = '0%'; return false;"><img src="images/news.png" class="ico">&nbsp;News</a>
+                <li>
+                    <a href="#" onclick="setSchemas(['meetups']); document.getElementById('leaderboard').style.width = '0%'; return false;"><img src="images/meetupicon.png" class="ico">&nbsp;Meetups</a>
                 </li>
                 <li>
-                    <a href="#" onclick="setSchemas(['meetups']); return false;"><img src="images/meetupicon.png" class="ico">&nbsp;Events</a>
-                </li>
-            <li>
-                <a href="#" onclick="setSchemas(['events']); return false;"><img src="images/news.png" class="ico">&nbsp;News</a>
+                    <a href="#" onclick="setSchemas(['health']); document.getElementById('leaderboard').style.width = '35%'; return false;"><img src="images/health.png" class="ico">&nbsp;Status updates</a>
+
                 </li>
                 <span id="search">
     <li class="searchbox">
@@ -425,7 +478,64 @@ setSchemas(['events'])
 
     </script>
 
-    <div id="chatBoxId" style="width: 300;position: fixed;left: 0;bottom: 0;height: 40"></div>
-    
+    <div id="chatBoxId"></div>
+    <div id="leaderboard"><img src="images/trophy.png" class="ico2"><table>
+      <tr>
+        <th>Rank</th>
+        <th>Username</th>
+        <th>Blood Sugar</th>
+        <th>Exercise</th>
+        <th>Diet</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>A1caddict</td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Diabetesgfu</td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Ih8sugar</td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Sweettooth</td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Resistinsulin</td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>Type3</td>        
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>Alwayspump</td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table></div>
     </body>
 </html>

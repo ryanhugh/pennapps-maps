@@ -5,7 +5,7 @@ function Chat() {
 	$(function () {
 		this.container = document.getElementById('chatBoxId')
 
-		this.container.setAttribute('style', "width: 300;position: fixed;left: 0;bottom: 0;height: 40px;z-index: 99999999;cursor:pointer;");
+		this.container.setAttribute('style', "width: 300px;position: fixed;left: 0px;bottom: 40px;height: 45px;z-index: 99999999;cursor:pointer;");
 
 	}.bind(this))
 
@@ -42,10 +42,10 @@ function Chat() {
 
 Chat.prototype.addMsg = function (userId, value) {
 	if (this.userId == userId) {
-		this.chatMessages.innerHTML += '<span style="font-weight:bold;font-size: 14px;">You</span>:' + value + '<br>'
+		this.chatMessages.innerHTML += '<div style="display:inline-block;min-width:47px;text-align: right;font-weight:bold;font-size: 14px;">You</div>: ' + value + '<br>'
 	}
 	else {
-		this.chatMessages.innerHTML += '<span style="font-weight:bold;font-size: 14px;">User ' + userId + '</span>:' + value + '<br>'
+		this.chatMessages.innerHTML += '<div style="display:inline-block;min-width:47px;text-align: right;font-weight:bold;font-size: 14px;">User ' + userId + '</div>: ' + value + '<br>'
 	}
 
 	this.chatBox.scrollTop = this.chatBox.scrollHeight;
@@ -85,15 +85,15 @@ Chat.prototype.sendMsg = function (msg) {
 
 //toggle between 400px and 40px
 Chat.prototype.toggleBox = function () {
-	if (parseInt(this.container.style.height) < 50) {
+	if (parseInt(this.container.style.height) < 51) {
 		this.container.style.height = '400px'
 		this.body.style.display = ''
-		this.titleBar.innerHTML = 'Click to close'
+		this.titleBar.innerHTML = '<img src="images/chat.png" style="height: 45px;vertical-align: middle;">'
 	}
 	else {
-		this.titleBar.innerHTML = 'Click to chat!'
+		this.titleBar.innerHTML = '<img src="images/chat.png" style="height: 45px;vertical-align: middle;">'
 		this.body.style.display = 'none'
-		this.container.style.height = '40px'
+		this.container.style.height = '45px'
 	}
 };
 
