@@ -254,9 +254,11 @@ var map;
                     // var str=d.attributes.item_datetime;
                     // console.log(str);  
                     
-                    addMarker(d.location_coordinates[0], '<Strong>'+"Blood-glucose level:"+'</Strong>'+((d.bloodGlucose.value > 140 || d.bloodGlucose.value < 70)? "Bad":"Good")+'<br>'+'<Strong>'+"Avg carbs per meal:"+'</Strong>'+d.food.value+d.food.units+'<br>'+
-                              '<Strong>'+"Blood insulin:"+'</Strong>'+d.bolusInsulin.value+d.bolusInsulin.units+'<br>'+
-                              '<Strong>'+"Daily exercise:"+'</Strong>'+d.exercise.value+d.exercise.units+'<br>'
+                    addMarker(d.location_coordinates[0], '<table>'+
+                              '<tr><td><Strong>'+"Blood-glucose level:"+'</Strong></td><td>'+((d.bloodGlucose.value > 140 || d.bloodGlucose.value < 70)? "Bad":"Good")+'</td></tr>'+
+                              '<tr><td><Strong>'+"Avg carbs per meal:"+'</Strong></td><td>'+d.food.value+d.food.units+'</td></tr>'+
+                              '<tr><td><Strong>'+"Blood insulin:"+'</Strong></td><td>'+d.bolusInsulin.value+d.bolusInsulin.units+'</td></tr>'+
+                              '<tr><td><Strong>'+"Daily exercise:"+'</Strong></td><td>'+d.exercise.value+d.exercise.units+'</td></tr></table>'
                   ,TYPE_HEALTH);
                     
                   });
@@ -307,7 +309,7 @@ function addMarker (coords,text,type) {
 
   console.log(ico,text,type,coords);
 
-  var m = L.marker([coords.latitude,coords.longitude],{icon: ico}).bindPopup(L.popup({maxWidth:500}).setContent( text )).addTo(map);
+  var m = L.marker([coords.latitude,coords.longitude],{icon: ico}).bindPopup(L.popup({minWidth:220,maxWidth:1000}).setContent( text )).addTo(map);
 
                     markers.push(m);
 }
