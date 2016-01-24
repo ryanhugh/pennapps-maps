@@ -34,7 +34,7 @@
         }
         text {
             font-family: "Roboto", sans-serif;
-          
+
         }
         #map {
             width: 100%;
@@ -176,15 +176,18 @@
 
 .axis {
   font: 10px sans-serif;
+  color: white;
 }
 .x.axis text{
     display:none;
+            font-family: "Roboto", sans-serif;
+
 }
 
 .axis path,
 .axis line {
   fill: none;
-  stroke: #000;
+  stroke: #fff;
   shape-rendering: crispEdges;
 }
 
@@ -198,6 +201,8 @@
   background: rgba(0, 0, 0, 0.8);
   color: #fff;
   border-radius: 2px;
+            font-family: "Roboto", sans-serif;
+
 }
 
 /* Creates a small triangle extender for the tooltip */
@@ -211,6 +216,8 @@
   content: "\25BC";
   position: absolute;
   text-align: center;
+            font-family: "Roboto", sans-serif;
+
 }
 
 /* Style northward tooltips differently */
@@ -629,7 +636,7 @@ setSchemas(['events'])
 
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    height = 300 - margin.top - margin.bottom;
 
 var x = d3.scale.ordinal()
     .rangeRoundBands([0, width], .1);
