@@ -189,6 +189,13 @@ Johnson.prototype.mergedObjects = function (callback) {
 			index = parseInt(results.bolusInsulin.length * Math.random())
 			newObj.bolusInsulin = results.bolusInsulin[index].bolusDelivered
 
+			if (!newObj.location_coordinates) {
+				newObj.location_coordinates = [{
+					"latitude": 39.955 + (Math.random() * .008 - .004),
+					"longitude": -75.19 + (Math.random() * .008 - .004)
+				}]
+			};
+
 			output.push(newObj)
 		};
 		return callback(null,output)
