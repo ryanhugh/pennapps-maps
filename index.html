@@ -3,27 +3,32 @@
 	
 	<title>PennApps XIII Every Block Home</title>
 	
-	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.js"></script>
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 	<script type="text/javascript" src="ZipPopup.js"></script>
-	<script type="text/javascript" src="endpoints/yikyak.js"></script>
+	<!-- // <script type="text/javascript" src="endpoints/yikyak.js"></script> -->
 	<script type="text/javascript" src="jsonp.js"></script>
 	<script type="text/javascript" src="sms.js"></script>
 	<script type="text/javascript" src="endpoints/everyblock.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
-
-	
+	<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,300italic,300,100italic,100,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 
 	<style>
+	*{
+		font-family: 'Roboto', sans-serif;
+
+	}
 	body {
 		padding:0;
 		margin:0;
 	}
 	#background {
 		background-image:url(images/maps_background.png);
+		background-size: cover;
 		width:100%;
 		height:100%;
 		-webkit-filter: blur(3px) brightness(.4);
@@ -82,6 +87,13 @@
 		font-weight:400;
 
 	}
+	h3 {
+		font-family: 'Roboto', sans-serif;
+		color:#FFF;
+		font-size:22pt;
+		font-weight:400;
+		/*display: inline-block;*/
+	}
 
 	#submitzip {
 		display:inline-block;
@@ -127,7 +139,18 @@
 	#fb-btn img {
 		height: 30px;
 	}
+.ui-menu { width: 150px; }
 
+	.label {
+		margin-left: 20px;
+		margin-right: 20px;
+	}
+
+	#menu1 {
+		vertical-align: middle;
+		width: 120px;
+		margin-top: 50px;
+	}
 
 	</style>
 
@@ -144,10 +167,15 @@
 	<div id="container">
 		<h1>Discover your Neighborhood</h1>
 
-		<h5>Enter your zipcode here:</h5>
 		<form action="mappy.html" method="GET">
-			Age: <input type="text" name="age">
-			<input type="text" name="zipcode">
+			<h3 class="label">Age: </h3><input type="text" name="age">
+			<h3 class="label">Gender: </h3>
+			<select id="menu1">
+				<option>Male</option>
+				<option>Female</option>
+				<option>Other</option>
+			</select><br>
+			<input type="text" name="zipcode"><br>
 			<input type="submit" value="Submit" id="submitzip">
 		</form>
 
@@ -160,6 +188,9 @@
 
 	</div>
 <script type="text/javascript">
+$(function() {
+    $( "#menu1" ).selectmenu();
+});
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(geolocate);
