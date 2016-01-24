@@ -3,7 +3,8 @@
 var baseUrl = ''
 
 function EveryBlock () {
-
+	var theData;
+	var theData2;
 	var currentZIP;
 	var currentCity;
 	function scanTimeline (callback) {
@@ -26,9 +27,10 @@ function EveryBlock () {
 	}
 
 	function scanNews (callback) {
-		getCityForZip(currentZIP,function (cityname) {
+		// getCityForZip(currentZIP,function (cityname) {
+			var cityname = 'chicago';
 			jsonp_request(getAPIURL('content/'+cityname+'/topnews'),callback);
-		});
+		// });
 	}
 
 	function scanBySchemas (schema,callback) {
@@ -52,7 +54,9 @@ function EveryBlock () {
 
 	function scanEventsBySchemas (schema,callback) {
 		getCityForZip(currentZIP,function (cityname) {
-			jsonp_request(getAPIURL('content/'+cityname+'/locations/'+currentZIP+'/timeline')+((schema == null)? '' : '&schema='+schema.join('&schema=')),function (data) {
+			var url = getAPIURL('content/'+cityname+'/locations/'+currentZIP+'/timeline/events')+((schema == null)? '' : '&schema='+schema.join('&schema='));
+			// var url = getAPIURL('content/'+cityname+'/topnews')+((schema == null)? '' : '&schema='+schema.join('&schema='));
+			jsonp_request(url,function (data) {
 				var results = data.results;
 				var filtered = [];
 
@@ -60,9 +64,21 @@ function EveryBlock () {
 
 				for (var i = 0; i < results.length; i++) {
 					// if (schema == null || schema.indexOf(results[i].schema) > -1) {
-						filtered.push(results[i]);
+						if (!theData[i]) continue;
+						if (schema.indexOf('meetups') > -1) {
+							results[i].title = theData2[i].title;
+							results[i].url = theData2[i].url;
+							results[i].time = theData2[i].time;
+							filtered.push(results[i]);
+						} else {
+							results[i].title = theData[i].title;
+							results[i].url = theData[i].url;
+							filtered.push(results[i]);
+						}
 					// }
 				};
+
+
 
 				callback(filtered);
 			});
@@ -208,6 +224,12 @@ function EveryBlock () {
 		},
 		searchByName:function (name,callback) {
 			searchByName(name,callback);
+		},
+		loadStories:function (data) {
+			theData = data;
+		},
+		loadStories2:function (data) {
+			theData2 = data;
 		}
 	};
 

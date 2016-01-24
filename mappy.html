@@ -10,6 +10,8 @@
 <script type="text/javascript" src="sms.js"></script>    
 <script type="text/javascript" src="endpoints/everyblock.js"></script>    
 <script type="text/javascript" src="endpoints/johnson.js"></script> 
+<script type="text/javascript" src="stuff.js"></script> 
+<script type="text/javascript" src="stuff2.js"></script> 
 
 <style>
         body {
@@ -91,12 +93,12 @@
                 <a href="index.html"><img src="images/home.png" class="ico">&nbsp;Home</a>
             </li>
             <li>
-                <a href="#" onclick="setSchemas(['news-articles']); return false;"><img src="images/news.png" class="ico">&nbsp;News</a>
+                <a href="#" onclick="setSchemas(['events']); return false;"><img src="images/news.png" class="ico">&nbsp;News</a>
                 <li>
-                    <a href="#" onclick="setSchemas(['crime']); return false;"><img src="images/crime.png" class="ico">&nbsp;Crime</a>
+                    <a href="#" onclick="setSchemas(['meetups']); return false;"><img src="images/meetupicon.png" class="ico">&nbsp;Meetups</a>
                 </li>
                 <li>
-                    <a href="#" onclick="setSchemas(['health']); return false;"><img src="images/health.png" class="ico">&nbsp;Health</a>
+                    <a href="#" onclick="setSchemas(['health']); return false;"><img src="images/health.png" class="ico">&nbsp;Local info</a>
                 </li>
                 <span id="search">
     <li class="searchbox">
@@ -221,7 +223,7 @@ var map;
                   });
                 });
               } else {
-                addMarkersFromList(data,((s.indexOf('crime') > -1)? TYPE_CRIME : TYPE_NEWS ) );
+                addMarkersFromList(data,((s.indexOf('meetups') > -1)? TYPE_CRIME : TYPE_NEWS ) );
                 console.log(data);
                 
               }
@@ -234,8 +236,14 @@ function addMarkersFromList (data,type) {
                   console.log(d);
                   var str=d.attributes.item_datetime;
                   // console.log(str);  
-                  addMarker(d.location_coordinates[0],'<Strong>'+"Event:"+'</Strong>'+d.title+'<br>'+'<Strong>'+"Venue:"+'</Strong>'+d.location_name+'<br>'+'<a target="_blank" class="popup" href="' + d.url + '">'+"More"+'</a>',type );
+                  var content;
+                  if (type == TYPE_NEWS) {
+                    content = d.title+'<br>'+'<a target="_blank" class="popup" href="' + d.url + '">'+"More"+'</a>';
+                  } else {
+                    content = '<Strong>'+"Event:"+'</Strong>'+d.title+'<br>'+'<Strong>'+"Venue:"+'</Strong>'+d.location_name+'<br><strong>Date & Time: </strong>'+d.time+'<br><a target="_blank" class="popup" href="' + d.url + '">'+"More"+'</a>';
+                  }
 
+                  addMarker(d.location_coordinates[0],content,type );
 
                   
                 });
@@ -244,7 +252,7 @@ function addMarkersFromList (data,type) {
 function addMarker (coords,text,type) {
   console.log(coords)
 
-  var ico;
+  var ico = TYPE_NEWS;
 
   switch (type) {
     case TYPE_CRIME:
@@ -257,6 +265,8 @@ function addMarker (coords,text,type) {
       ico = healthIcon;
       break;
   }
+
+  console.log(ico,text,type,coords);
 
   var m = L.marker([coords.latitude,coords.longitude],{icon: ico}).bindPopup(L.popup({maxWidth:500}).setContent( text )).addTo(map);
 
@@ -278,8 +288,9 @@ function setSearch (query) {
 }
 
 $('#searchbar').change(function(e){
-  searchDebounce.input();
-  console.log("change")
+  // searchDebounce.input();
+  setSearch(document.getElementById('searchbar').value);
+  console.log(document.getElementById('searchbar').value)
 });
 
 function Debounce(delay,callback) {
@@ -328,8 +339,8 @@ var healthIcon = L.icon({
 
     iconSize:     [29, 44], // size of the icon
     shadowSize:   [50, 64], // size of the shadow
-    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-    shadowAnchor: [8, 112],  // the same for the shadow
+    iconAnchor:   [22, 50], // point of the icon which will correspond to marker's location
+    shadowAnchor: [8, 68],  // the same for the shadow
     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
 var crimeIcon = L.icon({
@@ -338,8 +349,8 @@ var crimeIcon = L.icon({
 
     iconSize:     [29, 44], // size of the icon
     shadowSize:   [50, 64], // size of the shadow
-    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-    shadowAnchor: [8, 112],  // the same for the shadow
+    iconAnchor:   [22, 50], // point of the icon which will correspond to marker's location
+    shadowAnchor: [8, 68],  // the same for the shadow
     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
 var newsIcon = L.icon({
@@ -348,8 +359,8 @@ var newsIcon = L.icon({
 
     iconSize:     [29, 44], // size of the icon
     shadowSize:   [50, 64], // size of the shadow
-    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-    shadowAnchor: [8, 112],  // the same for the shadow
+    iconAnchor:   [22, 50], // point of the icon which will correspond to marker's location
+    shadowAnchor: [8, 68],  // the same for the shadow
     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
 
@@ -357,7 +368,7 @@ var TYPE_CRIME = 0;
 var TYPE_NEWS = 1;
 var TYPE_HEALTH = 2;
 
-
+setSchemas(['events'])
 
 // Twilio.sendMessage('7816975494',"Satty");
 
