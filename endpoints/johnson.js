@@ -5,7 +5,7 @@ function Johnson() {
 }
 
 
-Johnson.prototype.request = function (config, callback) {
+window.request = function (config, callback) {
 
 
 	var xmlhttp = new XMLHttpRequest();
