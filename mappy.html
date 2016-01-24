@@ -134,7 +134,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
   <script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
     <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script src="moment.js"></script>
+    <!-- // <script src="moment.js"></script> -->
     
   <script>
 
@@ -207,6 +207,28 @@ var map;
        var markers = [];
 
    function setSchemas (s) {
+
+if (s.indexOf('health') > -1) {
+        (new Johnson()).go(function  (err, results) {
+                  console.log(results);
+                  removeMarkers();
+                  results.forEach(function(d)
+                  {
+                    
+                    // var str=d.attributes.item_datetime;
+                    // console.log(str);  
+                    
+                    addMarker(d.location_coordinates[0], '<table>'+
+                              '<tr><td><Strong>'+"Blood-glucose level:"+'</Strong></td><td>'+((d.bloodGlucose.value > 140 || d.bloodGlucose.value < 70)? "Bad":"Good")+'</td></tr>'+
+                              '<tr><td><Strong>'+"Avg carbs per meal:"+'</Strong></td><td>'+d.food.value+d.food.units+'</td></tr>'+
+                              '<tr><td><Strong>'+"Blood insulin:"+'</Strong></td><td>'+d.bolusInsulin.value+d.bolusInsulin.units+'</td></tr>'+
+                              '<tr><td><Strong>'+"Daily exercise:"+'</Strong></td><td>'+d.exercise.value+d.exercise.units+'</td></tr></table>'
+                  ,TYPE_HEALTH);
+                    
+                  });
+                });
+} else {
+
      window.EveryBlock.scanEventsBySchemas(zip,s,function (parsed_json) {
           // data=[];      
           data = parsed_json;
@@ -223,57 +245,42 @@ var map;
 
               // map.clearLayers();
 
-              if (s[0]=='yikyak') {
-                yikYak.go(function (err, results) {
+              // if (s[0]=='yikyak') {
+              //   yikYak.go(function (err, results) {
 
-                   results.forEach(function(d)
-                  {
-                    console.log(d);
-                    // var str=d.attributes.item_datetime;
-                    // console.log(str);  
+              //      results.forEach(function(d)
+              //     {
+              //       console.log(d);
+              //       // var str=d.attributes.item_datetime;
+              //       // console.log(str);  
                     
-                    var html = [];
+              //       var html = [];
 
-                    html.push('<Strong>Message:</Strong>')
-                    html.push(d.message)
-                    if (d.url) {
-                      html.push('<br><Strong>Img:</Strong>')
-                      html.push('<br><a target="_blank" class="popup" href="' + d.url + '">'+"Img"+'</a>')
-                    };
-                    addMarker(d.location_coordinates[0],html.join(''));
+              //       html.push('<Strong>Message:</Strong>')
+              //       html.push(d.message)
+              //       if (d.url) {
+              //         html.push('<br><Strong>Img:</Strong>')
+              //         html.push('<br><a target="_blank" class="popup" href="' + d.url + '">'+"Img"+'</a>')
+              //       };
+              //       addMarker(d.location_coordinates[0],html.join(''));
                     
-                  });
+              //     });
 
 
-                }.bind(this))
-              }
+              //   }.bind(this))
+              // }
 
 
-              else if (s.indexOf('health') > -1) {
-                (new Johnson()).go(function  (err, results) {
-                  results.forEach(function(d)
-                  {
-                    console.log(d);
-                    // var str=d.attributes.item_datetime;
-                    // console.log(str);  
-                    
-                    addMarker(d.location_coordinates[0], '<table>'+
-                              '<tr><td><Strong>'+"Blood-glucose level:"+'</Strong></td><td>'+((d.bloodGlucose.value > 140 || d.bloodGlucose.value < 70)? "Bad":"Good")+'</td></tr>'+
-                              '<tr><td><Strong>'+"Avg carbs per meal:"+'</Strong></td><td>'+d.food.value+d.food.units+'</td></tr>'+
-                              '<tr><td><Strong>'+"Blood insulin:"+'</Strong></td><td>'+d.bolusInsulin.value+d.bolusInsulin.units+'</td></tr>'+
-                              '<tr><td><Strong>'+"Daily exercise:"+'</Strong></td><td>'+d.exercise.value+d.exercise.units+'</td></tr></table>'
-                  ,TYPE_HEALTH);
-                    
-                  });
-                });
-              } else {
+              /* else */
+                
+              
                 addMarkersFromList(data,((s.indexOf('meetups') > -1)? TYPE_CRIME : TYPE_NEWS ) );
                 console.log(data);
                 
-              }
+              
         });
    }
-       
+}
 function addMarkersFromList (data,type) {
   data.forEach(function(d)
                 {
