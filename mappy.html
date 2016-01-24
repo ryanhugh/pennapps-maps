@@ -117,7 +117,7 @@
           font-weight: bold;
 
         }
-        table {
+        table.leaderboard {
           font-size:12pt;
           width:80%;
           margin:0 auto;
@@ -148,6 +148,13 @@
 
         #chatBoxBodyId {
           font-family: "Roboto", sans-serif;
+        }
+        .leaflet-popup-content {
+          color: black !important;
+        }
+
+        .light {
+          font-weight: lighter;
         }
 
     </style>
@@ -483,7 +490,7 @@ setSchemas(['events'])
     </script>
 
     <div id="chatBoxId"></div>
-    <div id="leaderboard"><img src="images/trophy.png" class="ico2"><table>
+    <div id="leaderboard"><img src="images/trophy.png" class="ico2"><table class="leaderboard">
       <tr>
         <th>Rank</th>
         <th>Username</th>
@@ -491,54 +498,61 @@ setSchemas(['events'])
         <th>Exercise</th>
         <th>Diet</th>
       </tr>
+      <tr class="light">
+        <td></td>
+        <td></td>
+        <td>mg/dL</td>
+        <td>hrs</td>
+        <td>g/meal</td>
+      </tr>
       <tr>
         <td>1</td>
         <td>A1caddict</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>90</td>
+        <td>3</td>
+        <td>20</td>
       </tr>
       <tr>
         <td>2</td>
         <td>Diabetesgfu</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>96</td>
+        <td>3</td>
+        <td>28</td>
       </tr>
       <tr>
         <td>3</td>
         <td>Ih8sugar</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>102</td>
+        <td>2</td>
+        <td>35</td>
       </tr>
       <tr>
         <td>4</td>
         <td>Sweettooth</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>103</td>
+        <td>2</td>
+        <td>41</td>
       </tr>
       <tr>
         <td>5</td>
         <td>Resistinsulin</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>108</td>
+        <td>1</td>
+        <td>47</td>
       </tr>
       <tr>
         <td>6</td>
         <td>Type3</td>        
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>120</td>
+        <td>1</td>
+        <td>54</td>
       </tr>
       <tr>
         <td>7</td>
         <td>Alwayspump</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>123</td>
+        <td>1/2</td>
+        <td>59</td>
       </tr>
     </table></div>
     </body>
