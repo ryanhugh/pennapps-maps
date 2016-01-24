@@ -111,6 +111,12 @@ Chat.prototype.onKeyPress = function (event) {
 	}
 
 	var value = this.chatBox.value
+
+	if (value === '') {
+		return;
+	};
+
+
 	this.chatBox.value = ''
 	this.sendMsg(JSON.stringify({
 		msg: value,
