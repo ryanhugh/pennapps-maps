@@ -7,29 +7,31 @@ function Chat() {
 
 		this.container.setAttribute('style', "width: 300px;position: fixed;left: 0px;bottom: 40px;height: 45px;z-index: 99999999;cursor:pointer;");
 
+		request({
+			url: 'chat.html'
+		}, function (err, results) {
+			this.container.innerHTML = results
+
+
+			this.titleBar = document.getElementById('chatBoxTitleId')
+			this.body = document.getElementById('chatBoxBodyId')
+			this.chatBox = document.getElementById('chatTextBoxId')
+			this.chatMessages = document.getElementById('chatJawnId')
+			this.chatBox.onkeydown = this.onKeyPress.bind(this)
+
+
+			this.titleBar.onclick = function () {
+				this.toggleBox()
+			}.bind(this)
+
+
+		}.bind(this))
+
 	}.bind(this))
 
 
 	//ghetto angularjs
-	request({
-		url: 'chat.html'
-	}, function (err, results) {
-		this.container.innerHTML = results
-
-
-		this.titleBar = document.getElementById('chatBoxTitleId')
-		this.body = document.getElementById('chatBoxBodyId')
-		this.chatBox = document.getElementById('chatTextBoxId')
-		this.chatMessages = document.getElementById('chatJawnId')
-		this.chatBox.onkeydown = this.onKeyPress.bind(this)
-
-
-		this.titleBar.onclick = function () {
-			this.toggleBox()
-		}.bind(this)
-
-
-	}.bind(this))
+	
 
 
 	this.userId = parseInt(Math.random() * 100)
