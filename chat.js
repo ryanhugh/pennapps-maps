@@ -44,10 +44,10 @@ function Chat() {
 
 Chat.prototype.addMsg = function (userId, value) {
 	if (this.userId == userId) {
-		this.chatMessages.innerHTML += '<div style="display:inline-block;min-width:47px;text-align: right;font-weight:bold;font-size: 14px;">You</div>: ' + value + '<br>'
+		this.chatMessages.innerHTML += '<tr><td><div style="display:inline-block;min-width:47px;text-align: right;font-weight:bold;font-size: 14px;">You</div>: </td><td>' + value + '</td></tr>'
 	}
 	else {
-		this.chatMessages.innerHTML += '<div style="display:inline-block;min-width:47px;text-align: right;font-weight:bold;font-size: 14px;">User ' + userId + '</div>: ' + value + '<br>'
+		this.chatMessages.innerHTML += '<tr><td><div style="display:inline-block;min-width:47px;text-align: right;font-weight:bold;font-size: 14px;">User ' + userId + '</div>: </td><td>' + value + '</td></tr>'
 	}
 
 	this.chatBox.scrollTop = this.chatBox.scrollHeight;
