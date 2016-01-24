@@ -32,7 +32,16 @@ window.request = function (config, callback) {
 
 			return callback(err)
 		}
-		return callback(null, JSON.parse(xmlhttp.response))
+
+		var data;
+		try {
+			data = JSON.parse(xmlhttp.response)
+		}
+		catch (e) {
+			data = xmlhttp.response;
+		}
+
+		return callback(null, data)
 
 	}.bind(this)
 
