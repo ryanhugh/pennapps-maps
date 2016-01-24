@@ -31,7 +31,7 @@
 		background-size: cover;
 		width:100%;
 		height:100%;
-		-webkit-filter: blur(3px) brightness(.4);
+		-webkit-filter: blur(2.5px) brightness(.4);
 		position:absolute;
 		z-index: -1;
 	}
@@ -198,9 +198,9 @@
 	</div>
 
 	<div id="container">
-		<img src="images/cubeslogo.png" id="logoimage" /><h3>Discover your Neighborhood</h3>
+		<img src="images/cubeslogo.png" id="logoimage" /><h3></h3>
 
-		<form action="mappy.html" method="GET" onsubmit="return false;">
+		
 		<table style="text-align:center; width:100%;">
 			<tr>
 				<td>
@@ -234,7 +234,7 @@
 				</td>
 
 				<td style="vertical-align:middle;text-align:left">
-					<input type="text" name="zipcode" class="field">
+					<input type="text" name="zipcode" class="field" id="zipfield">
 					
 				</td>
 
@@ -248,7 +248,7 @@
 				</td>
 			</tr><tr>
 				<td colspan="2">
-					<input type="submit" value="Use ZIP" id="submitzip" class="button">
+					<input type="submit" value="Use ZIP" id="submitzip" class="button" onclick="window.location.href='mappy.html?zipcode='+(document.getElementById('zipfield').value);">
 					<br>
 					<h3>OR</h3>
 					<form onsubmit="getLocation(); return false;">
@@ -262,7 +262,7 @@
 
 			<br>
 					
-		</form>
+		
 
 		
 
