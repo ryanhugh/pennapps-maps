@@ -646,7 +646,7 @@ setSchemas(['events'])
 <script>
 
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 800 - margin.left - margin.right,
+    width = 650 - margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
 
 var x = d3.scale.ordinal()
@@ -695,6 +695,7 @@ d3.json("mergedData.json",function(data) {
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
+      .style("color", "white")
       .text("Blood Glucose(mg/dL)");
 
   svg.selectAll(".bar")
