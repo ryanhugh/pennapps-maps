@@ -489,7 +489,7 @@ function setSearch (query) {
 $('#searchbar').change(function(e){
   // searchDebounce.input();
   setSearch(document.getElementById('searchbar').value);
-  console.log(document.getElementById('searchbar').value)
+  console.log("SEARCHED",document.getElementById('searchbar').value)
 });
 
 function Debounce(delay,callback) {
