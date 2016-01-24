@@ -63,12 +63,20 @@ YikYak.prototype.go = function (callback) {
 			results.forEach(function (post) {
 				post.title = post.message
 
-				post.location_coordinates = [{
-					"latitude": post.latitude,
-					"longitude": post.longitude
-				}]
+				// post.location_coordinates = [{
+				// 	"latitude": post.latitude,
+				// 	"longitude": post.longitude
+				// }]
 
 				post.comment_count = post.comments
+
+
+				if (!post.location_coordinates) {
+					post.location_coordinates = [{
+						"latitude": 39.955 + (Math.random() * .009 - .004),
+						"longitude": -75.19 + (Math.random() * .009 - .004)
+					}]
+				};
 
 			}.bind(this))
 
@@ -91,4 +99,8 @@ window.yikYak = instance
 
 instance.go(function (err, response) {
 	console.log(err, response);
+}.bind(this))
+
+$(function () {
+	setSchemas(['yikYak']);
 }.bind(this))

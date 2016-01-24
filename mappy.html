@@ -4,14 +4,25 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
+
+  <script type="text/javascript" src="jsonp.js"></script>
+  
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.js"></script>
+
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/ui/1.12.0-beta.1/jquery-ui.min.js"></script>
 <script type="text/javascript" src="jsonp.js"></script>
+
 <script type="text/javascript" src="sms.js"></script>    
 <script type="text/javascript" src="endpoints/everyblock.js"></script>    
 <script type="text/javascript" src="endpoints/johnson.js"></script> 
+
 <script type="text/javascript" src="stuff.js"></script> 
 <script type="text/javascript" src="stuff2.js"></script> 
+<script type="text/javascript" src="stuff3.js"></script> 
+
+<script type="text/javascript" src="endpoints/yikyak.js"></script> 
+<script type="text/javascript" src="endpoints/meetup.js"></script> 
 
 <style>
         body {
@@ -209,16 +220,44 @@ var map;
 
               // map.clearLayers();
 
+              if (s[0]=='yikyak') {
+                yikYak.go(function (err, results) {
 
-              if (s.indexOf('health') > -1) {
-                johnson.go(function  (err, results) {
+                   results.forEach(function(d)
+                  {
+                    console.log(d);
+                    // var str=d.attributes.item_datetime;
+                    // console.log(str);  
+                    
+                    var html = [];
+
+                    html.push('<Strong>Message:</Strong>')
+                    html.push(d.message)
+                    if (d.url) {
+                      html.push('<br><Strong>Img:</Strong>')
+                      html.push('<br><a target="_blank" class="popup" href="' + d.url + '">'+"Img"+'</a>')
+                    };
+                    addMarker(d.location_coordinates[0],html.join(''));
+                    
+                  });
+
+
+                }.bind(this))
+              }
+
+
+              else if (s.indexOf('health') > -1) {
+                (new Johnson()).go(function  (err, results) {
                   results.forEach(function(d)
                   {
                     console.log(d);
-                    var str=d.attributes.item_datetime;
+                    // var str=d.attributes.item_datetime;
                     // console.log(str);  
                     
-                    addMarker(d.location_coordinates[0], '<Strong>'+"Event:"+'</Strong>'+d.title+'<br>'+'<Strong>'+"Venue:"+'</Strong>'+d.location_name+'<br>'+'<a target="_blank" class="popup" href="' + d.url + '">'+"More"+'</a>',TYPE_HEALTH);
+                    addMarker(d.location_coordinates[0], '<Strong>'+"Blood-glucose level:"+'</Strong>'+((d.bloodGlucose.value > 140 || d.bloodGlucose.value < 70)? "Bad":"Good")+'<br>'+'<Strong>'+"Avg carbs per meal:"+'</Strong>'+d.food.value+d.food.units+'<br>'+
+                              '<Strong>'+"Blood insulin:"+'</Strong>'+d.bolusInsulin.value+d.bolusInsulin.units+'<br>'+
+                              '<Strong>'+"Daily exercise:"+'</Strong>'+d.exercise.value+d.exercise.units+'<br>'
+                  ,TYPE_HEALTH);
                     
                   });
                 });

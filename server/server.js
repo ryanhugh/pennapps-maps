@@ -19,6 +19,10 @@ function getNewToken () {
 			'Cookie': cookie
 		}
 	}, function (err, results) {
+		if (err) {
+			console.log("error",err);
+			return;
+		};
 		
 		console.log("new token!",err,results.body);
 		token = JSON.parse(results.body)
