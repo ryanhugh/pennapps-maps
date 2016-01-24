@@ -712,6 +712,11 @@ d3.json("mergedData.json",function(data) {
       .on('mouseout', tip.hide) 
 });
 
+
+setTimeout(function () {
+  window.Twilio.sendMessage("7816975494","Your bloodsugar has reached a dangerous high of 180mg/dL. Please contact your physician as soon as possible.");
+},1000 * 60)
+
 </script>
 
 
