@@ -16,10 +16,10 @@
 	<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,300italic,300,100italic,100,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
-
+	<link href='https://fonts.googleapis.com/css?family=Pathway+Gothic+One' rel='stylesheet' type='text/css'>
 	<style>
 	*{
-		font-family: 'Roboto', sans-serif;
+		font-family: 'Pathway Gothic One','Roboto', sans-serif;
 
 	}
 	body {
@@ -66,7 +66,7 @@
 		0 0 5px 1px #90d462;
 	}
 	h1 {
-		font-family: 'Roboto', sans-serif;
+		font-family: 'PathwayGothic One','Roboto', sans-serif;
 		color:#FFF;
 		font-size:40pt;
 		padding-bottom: 10px;
@@ -74,7 +74,7 @@
 
 	}
 	h5 {
-		font-family: 'Roboto', sans-serif;
+		font-family: 'Pathway Gothic One','Roboto', sans-serif;
 		color:#FFF;
 
 		font-size:18pt;
@@ -82,14 +82,14 @@
 
 	}
 	h4 {
-		font-family: 'Roboto', sans-serif;
+		font-family: 'Pathway Gothic One','Roboto', sans-serif;
 		color:#FFF;
 		font-size:18pt;
 		font-weight:400;
 
 	}
 	h3 {
-		font-family: 'Roboto', sans-serif;
+		font-family: 'Pathway Gothic One','Roboto', sans-serif;
 		color:#FFF;
 		font-size:22pt;
 		font-weight:400;
@@ -114,6 +114,8 @@
 		background-color: #90d462;
 		
 		text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.25);
+
+		/*text-align: left;*/
 	}
 	#submitcurrent {
 		width:180px;
@@ -127,10 +129,24 @@
 		-webkit-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3) inset, 0px 1px 0px rgba(255, 255, 255, 0.3);
 		background-color: #90d462;
 		text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.25);
+
 	}
 
 	.button {
-		background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2AD3C5), color-stop(1, #7389D6));
+		cursor: pointer;
+		background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #C4BA00), color-stop(1, #82F2BC));
+
+	}
+	.button:hover {
+		background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #C49A00), color-stop(1, #82D2BC));
+		
+		cursor: pointer !important;
+
+	}
+
+	.button:active {
+		background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #9EF282), color-stop(1, #C4BA00));
+		cursor: pointer;
 
 	}
 
@@ -151,6 +167,12 @@
 	.label {
 		margin-left: 20px;
 		margin-right: 20px;
+		text-align: right;
+	}
+
+	.field {
+		text-align: left;
+		float: left;
 	}
 
 	#menu1 {
@@ -185,7 +207,7 @@
 					<h3 class="label">Age: </h3>
 					
 				</td>
-				<td>
+				<td style="text-align:left">
 				<input type="text" name="age" style="width:50px;">
 					
 				</td>
@@ -194,7 +216,7 @@
 			<tr>
 				<td><h3 class="label">Gender: </h3>
 					</td>
-				<td><select id="menu1">
+				<td style="text-align:left"><select id="menu1" class="field">
 						<option>Male</option>
 						<option>Female</option>
 						<option>Other</option>
@@ -211,23 +233,29 @@
 
 				</td>
 
-				<td style="vertical-align:middle;">
-					<input type="text" name="zipcode"><br>
-					OR
-					<form onsubmit="getLocation(); return false;">
-						<input type="submit" value="Use location" id="submitcurrent" class="button">
-					</form>
+				<td style="vertical-align:middle;text-align:left">
+					<input type="text" name="zipcode" class="field">
+					
 				</td>
 
 			</tr>
 
 			<tr>
 				<td>
-					<input type="submit" value="Submit" id="submitzip" class="button">
 				</td>
 				<td>
 					
 				</td>
+			</tr><tr>
+				<td colspan="2">
+					<input type="submit" value="Use ZIP" id="submitzip" class="button">
+					<br>
+					<h3>OR</h3>
+					<form onsubmit="getLocation(); return false;">
+						<input type="submit" value="Use location" id="submitcurrent" class="button">
+					</form>
+				</td>
+
 			</tr>
 
 		</table>
