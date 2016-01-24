@@ -178,15 +178,12 @@ Johnson.prototype.mergedObjects = function (callback) {
 			newObj.bloodGlucose = results.bloodGlucose[index].bgValue
 
 
-
 			index = parseInt(results.food.length * Math.random())
 			newObj.food = results.food[index].carbohydrates
 
 
-
 			index = parseInt(results.exercise.length * Math.random())
 			newObj.exercise = results.exercise[index].exercise
-
 
 
 			index = parseInt(results.bolusInsulin.length * Math.random())
