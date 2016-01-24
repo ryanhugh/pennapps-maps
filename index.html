@@ -276,6 +276,7 @@ $(function() {
 });
 function getLocation() {
     if (navigator.geolocation) {
+    	console.log("should be getting LOCATION")
         navigator.geolocation.getCurrentPosition(geolocate);
     } else {
         alert("No location support in this browser");
