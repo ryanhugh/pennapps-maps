@@ -54,8 +54,14 @@ function EveryBlock () {
 
 	function scanEventsBySchemas (schema,callback) {
 		getCityForZip(currentZIP,function (cityname) {
-			var url = getAPIURL('content/'+cityname+'/locations/'+currentZIP+'/timeline/events')+((schema == null)? '' : '&schema='+schema.join('&schema='));
-			// var url = getAPIURL('content/'+cityname+'/topnews')+((schema == null)? '' : '&schema='+schema.join('&schema='));
+			var url;
+			if (schema[0] == 'events'){
+				url = getAPIURL('content/'+cityname+'/locations/'+currentZIP+'/timeline/events');
+			} else {
+				url = getAPIURL('content/'+cityname+'/locations/'+currentZIP+'/timeline');
+			}
+			// url = getAPIURL('content/'+cityname+'/topnews')+((schema == null)? '' : '&schema='+schema.join('&schema='));
+			// url = getAPIURL('content/'+cityname+'/locations/'+currentZIP+'/timeline/events')+((schema == null)? '' : '&schema='+schema.join('&schema='));
 			jsonp_request(url,function (data) {
 				var results = data.results;
 				var filtered = [];
@@ -63,6 +69,7 @@ function EveryBlock () {
 				console.log(results)
 
 				for (var i = 0; i < results.length; i++) {
+						console.log(results[i],theData[i],theData2[i])
 					// if (schema == null || schema.indexOf(results[i].schema) > -1) {
 						if (!theData[i]) continue;
 						if (schema.indexOf('meetups') > -1) {
