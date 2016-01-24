@@ -51,7 +51,7 @@ window.request = function (config, callback) {
 
 Johnson.prototype.fire = function (callback) {
 
-	this.request({
+	request({
 		url: 'https://jnj-dev.apigee.net/otr/v1/patient/-/healthdata/search?type=bloodGlucose,food&startDate=2010-10-26T00%3A00%3A00&endDate=2017-01-24T00%3A00%3A00&limit=2000',
 		headers: {
 			'Authorization': 'Bearer TxTLwxaAmKAGyAGEqjbUOBUPiWlm'
@@ -67,8 +67,6 @@ Johnson.prototype.go = function (callback) {
 		if (err) {
 			return callback(err)
 		}
-
-
 
 		response = response.bloodGlucose;
 
@@ -158,7 +156,7 @@ Johnson.prototype.average = function (callback) {
 
 Johnson.prototype.mergedObjects = function (callback) {
 
-	this.request({
+	request({
 		url: 'examples/johnson%20and%20johnson/data.js',
 	}, function (err, results) {
 		if (err) {
