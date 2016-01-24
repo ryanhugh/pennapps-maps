@@ -45,7 +45,7 @@ Chat.prototype.addMsg = function (userId, value) {
 		this.chatMessages.innerHTML += '<span style="font-weight:bold;font-size: 14px;">You</span>:' + value + '<br>'
 	}
 	else {
-		this.chatMessages.innerHTML += '<span style="font-weight:bold;font-size: 14px;">User ' + this.userId + '</span>:' + value + '<br>'
+		this.chatMessages.innerHTML += '<span style="font-weight:bold;font-size: 14px;">User ' + userId + '</span>:' + value + '<br>'
 	}
 
 	this.chatBox.scrollTop = this.chatBox.scrollHeight;
